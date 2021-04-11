@@ -1,7 +1,10 @@
 # .vim
-My own auto init vim config files
+My own auto init vim config files.
+
+Please note that this repository now only support ubuntu version above 20.04.
 
 # Install
+
 First, you need to clone this repository to your machine through using git.
 
     git clone https://github.com/codefiring/.vim
