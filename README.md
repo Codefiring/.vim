@@ -12,4 +12,4 @@ And then, copy the file `init.vim` to your home path. Remember to change it's na
 
 If everything goes right when you open vim, it will automatically start installing.
 
-Otherwise, open vim using command `:PlugInstall` to finish initialize your vim config. 
+Otherwise, open vim using command `:PlugInstall` to finish initializing your vim config. 
