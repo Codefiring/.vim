@@ -6,6 +6,6 @@ First, you need to clone this repository to your machine through using git.
 
     git clone https://github.com/codefiring/.vim
 
-And then, copy the file init.vim to .vimrc under your home path.
+And then, copy the file `init.vim` to your home path. Remember to change it's name to `.vimrc`
 
-open vim using command :PlugInstall to finish initialize your vim config. 
+open vim using command `:PlugInstall` to finish initialize your vim config. 
