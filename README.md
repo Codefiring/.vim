@@ -1,6 +1,5 @@
 # .vim
 My own auto init vim config files.
-hygyybyby
 Please note that this repository now only support ubuntu version above 20.04.
 
 # Install
