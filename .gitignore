@@ -1,2 +1,4 @@
-plugged
-sessions
+cache/
+plugged/
+sessions/
+*.swp
