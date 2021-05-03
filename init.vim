@@ -1,8 +1,8 @@
 
-if empty(glob('~/.vim/autoload/plug.vim'))
-    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+if empty(glob('~/.config/nvim/autoload/plug.vim'))
+    silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
                 \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall --sync | source ~/.vimrc
+    autocmd VimEnter * PlugInstall --sync | source ~/.config/nvim/init.vim
 endif
 let mapleader=" "
 
@@ -42,10 +42,9 @@ set ignorecase      "搜索忽略大小写
 set smartcase       "开启智能大小写
 set nocompatible    "设置不兼容vi
 set encoding=utf-8  "使用 utf-8 编码
-set signcolumn=yes
 "set list
 set listchars=tab:\|\
-"set backupdir=~/.local/.vim/.backup/    "设置备份文件交换文件操作历史文件的保存位置
+"set backupdir=~/.local/.nvim/.backup/    "设置备份文件交换文件操作历史文件的保存位置
 set autochdir       "自动切换工作目录这主要用在一个Vim会话之中打开多个文件的情况默认的工作目录是打开的第一个文件的目录该配置可以将工作目录自动切换到正在编辑的文件
 set autoread        "打开文件监视如果在编辑过程中文件发生外部改变比如被别的编辑器编辑了就会发出提示
 set wildmenu        "命令模式下底部操作指令按下 Tab 键自动补全第一次按下Tab会显示所有匹配的操作指令的清单第二次按下Tab会依次选择各个指令
@@ -71,7 +70,7 @@ noremap <LEADER><CR> :nohlsearch<CR>
 
 noremap S :w<CR>        "使用 S 保存
 noremap Q :q<CR>        "使用 Q 普通退出
-noremap R :source ~/.vimrc<CR> 
+noremap R :source ~/.config/nvim/init.vim<CR> 
 noremap ; :
 
 "=====分屏======
@@ -86,7 +85,7 @@ noremap <LEADER>h <C-w>h
 noremap <LEADER>l <C-w>l
 
 "
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.config/nvim/plugged')
 " Auto complete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
@@ -98,24 +97,19 @@ Plug 'vim-airline/vim-airline'
 " File navigation
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 
 " Taglist
 Plug 'majutsushi/tagbar', { 'on': 'TagbarOpenAutoClose' }
 
 " Error checking
-" Plug 'w0rp/ale'
+Plug 'w0rp/ale'
 
 " Undo Tree
 Plug 'mbbill/undotree/'
 
 " C/C++
 Plug 'jackguo380/vim-lsp-cxx-highlight'
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'skywind3000/asyncrun.vim'
-Plug 'dense-analysis/ale'
-Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension'  }
 
 " Python
 Plug 'vim-scripts/indentpython.vim'
@@ -134,6 +128,7 @@ Plug 'mg979/vim-visual-multi'
 Plug 'Yggdroot/indentLine'
 Plug 'tomtom/tcomment_vim'
 
+
 " Visual enhancement 
 Plug 'luochen1990/rainbow'
 Plug 'ryanoasis/vim-devicons'
@@ -151,95 +146,7 @@ vmap <LEADER>cu g<
 "=== rainbow
 let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle"
 
-"=== ctags
-set tags=./.tags;,.tags
 
-"=== vim-gutentags
-" gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
-let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
-
-" 所生成的数据文件的名称
-let g:gutentags_ctags_tagfile = '.tags'
-
-" 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
-let s:vim_tags = expand('~/.cache/tags')
-let g:gutentags_cache_dir = s:vim_tags
-
-" 配置 ctags 的参数
-let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
-let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
-let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
-
-" 检测 ~/.cache/tags 不存在就新建
-if !isdirectory(s:vim_tags)
-    silent! call mkdir(s:vim_tags, 'p')
-endif
-
-"=== asyncrun.vim
-" 自动打开 quickfix window ，高度为 6
-let g:asyncrun_open = 6 
-
-" 任务结束时候响铃提醒
-let g:asyncrun_bell = 1
-
-
-" F5 运行
-nnoremap <silent> <F5> :AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
-
-" F6 运行测试
-" nnoremap <silent> <F6> :AsyncRun -cwd=<root> -raw make test <cr>
-nnoremap <silent> <F6> :AsyncRun -cwd=~/uEmu/build/libs2e-release/ make <cr>
-
-" F7 编译整个项目
-nnoremap <silent> <F7> :AsyncRun -cwd=<root> make -f makefile <cr>
-
-" F8 运行当前项目
-nnoremap <silent> <F8> :AsyncRun -cwd=<root> -raw make run <cr>
-
-" F9 为编译单文件
-nnoremap <silent> <F9> :AsyncRun g++ -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
-
-" F10 打开/关闭 Quickfix 窗口
-nnoremap <F10> :call asyncrun#quickfix_toggle(6)<cr>
-
-"=== ale
-let g:ale_linters_explicit = 1
-let g:ale_completion_delay = 500
-let g:ale_echo_delay = 20
-let g:ale_lint_delay = 500
-let g:ale_echo_msg_format = '[%linter%] %code: %%s'
-let g:ale_lint_on_text_changed = 'normal'
-let g:ale_lint_on_insert_leave = 1
-let g:airline#extensions#ale#enabled = 1
-
-let g:ale_c_gcc_options = '-Wall -O2 -std=c99'
-let g:ale_cpp_gcc_options = '-Wall -O2 -std=c++14'
-let g:ale_c_cppcheck_options = ''
-let g:ale_cpp_cppcheck_options = ''
-
-let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs', 'build.xml']
-
-"=== cpp
-" set path=.,/usr/include/,/root/Github/stm32f103-template/**,/root/Github/stm32f103-template/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/**
-" /root/Github/stm32f103-template/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/inc/,/root/Github/stm32f103-template/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/
-
-"=== leaderF
-let g:Lf_ShortcutF = '<c-p>'
-let g:Lf_ShortcutB = '<m-n>'
-noremap <c-n> :LeaderfMru<cr>
-noremap <m-p> :LeaderfFunction!<cr>
-noremap <m-n> :LeaderfBuffer<cr>
-noremap <m-m> :LeaderfTag<cr>
-let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': ''  }
-
-let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git']
-let g:Lf_WorkingDirectoryMode = 'Ac'
-let g:Lf_WindowHeight = 0.30
-let g:Lf_CacheDirectory = expand('~/.vim/cache')
-let g:Lf_ShowRelativePath = 0
-let g:Lf_HideHelp = 1
-let g:Lf_StlColorscheme = 'powerline'
-let g:Lf_PreviewResult = {'Function':0, 'BufTag':0}
 
 let g:coc_global_extensions = [
             \'coc-diagnostic',
@@ -355,6 +262,8 @@ nnoremap <LEADER>E :CocCommand explorer<CR>
 
 "===coc-calc
 " append result on current expression
+nmap <Leader>ca <Plug>(coc-calc-result-append)
+" replace result on current expression
 nmap <Leader>cr <Plug>(coc-calc-result-replace)
 
 "===coc.highlight
@@ -389,4 +298,4 @@ xmap <leader>x  <Plug>(coc-convert-snippet)
 
 
 
-
+"
