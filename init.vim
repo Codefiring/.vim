@@ -101,9 +101,9 @@ Plug 'vim-airline/vim-airline'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'Xuyuanp/nerdtree-git-plugin'
 
-
 " Taglist
-Plug 'majutsushi/tagbar', { 'on': 'TagbarOpenAutoClose' }
+" Plug 'majutsushi/tagbar', { 'on': 'TagbarOpenAutoClose' }
+Plug 'preservim/tagbar'
 
 " Error checking
 " Plug 'w0rp/ale'
@@ -115,8 +115,10 @@ Plug 'mbbill/undotree/'
 Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'skywind3000/asyncrun.vim'
+Plug 'skywind3000/asynctasks.vim'
 Plug 'dense-analysis/ale'
 Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension'  }
+Plug 'skywind3000/vim-terminal-help'
 
 " Python
 Plug 'vim-scripts/indentpython.vim'
@@ -193,7 +195,7 @@ nnoremap <silent> <F5> :AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_
 nnoremap <silent> <F6> :AsyncRun -cwd=~/uEmu/build/libs2e-release/ make <cr>
 
 " F7 编译整个项目
-nnoremap <silent> <F7> :AsyncRun -cwd=<root> make -f makefile <cr>
+nnoremap <silent> <F7> :AsyncRun -cwd=<root> make -f Makefile <cr>
 
 " F8 运行当前项目
 nnoremap <silent> <F8> :AsyncRun -cwd=<root> -raw make run <cr>
@@ -202,7 +204,7 @@ nnoremap <silent> <F8> :AsyncRun -cwd=<root> -raw make run <cr>
 nnoremap <silent> <F9> :AsyncRun g++ -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
 
 " F10 打开/关闭 Quickfix 窗口
-nnoremap <F10> :call asyncrun#quickfix_toggle(6)<cr>
+nnoremap <silent> <F10> :call asyncrun#quickfix_toggle(6) <cr>
 
 "=== ale
 let g:ale_linters_explicit = 1
@@ -242,6 +244,12 @@ let g:Lf_ShowRelativePath = 0
 let g:Lf_HideHelp = 1
 let g:Lf_StlColorscheme = 'powerline'
 let g:Lf_PreviewResult = {'Function':0, 'BufTag':0}
+let g:Lf_WindowPosition = 'popup'
+let g:Lf_PreviewInPopup = 1
+
+
+"=== vim-terminal-helper
+let g:terminal_height = 15
 
 
 
